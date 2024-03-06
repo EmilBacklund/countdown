@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background: #1d1e28;
+}
+
+@layer base {
+  html {
+    font-family: "Red Hat Text", system-ui, sans-serif;
+  }
+}
