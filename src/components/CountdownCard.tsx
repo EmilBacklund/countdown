@@ -1,14 +1,15 @@
 interface CountdownCardProps {
   timeUnit: string;
+  time: string;
 }
 
-const CountdownCard = ({ timeUnit }: CountdownCardProps) => {
+const CountdownCard = ({ timeUnit, time }: CountdownCardProps) => {
   return (
     <div className="flex flex-col gap-4 flex-1">
       <div className="bg-[#191A23] pb-[4.73px] md:pb-2.5 rounded-lg">
         <div className="bg-[#343650] pt-[14px] md:pt-[34px] pb-[14.27px] md:pb-[35px] rounded-lg  overflow-hidden relative">
           <p className="text-4xl leading-[36px] md:text-[80px] md:leading-[80px] font-bold text-[#FB5E84] text-center md:tracking-[-2.4px] tracking-[-1.08px]">
-            08
+            {time}
           </p>
           <div className="bg-[#191A23] rounded-full md:size-3 size-1.5 absolute top-1/2 -translate-y-1/2 md:-left-1.5 -left-[3px]"></div>
           <div className="bg-[#191A23] rounded-full md:size-3 size-1.5 absolute top-1/2 -translate-y-1/2 md:-right-1.5 -right-[3px]"></div>
