@@ -6,6 +6,12 @@ const CountdownCardContainer = () => {
   const [hours, setHours] = useState("00");
   const [minutes, setMinutes] = useState("00");
   const [seconds, setSeconds] = useState("00");
+  const [flipCard, setFlipCard] = useState({
+    days: false,
+    hours: false,
+    minutes: false,
+    seconds: false,
+  });
 
   useEffect(() => {
     const target = new Date();
@@ -23,27 +29,64 @@ const CountdownCardContainer = () => {
         // Handle countdown complete scenario
       } else {
         // Update countdown
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        const daysValue = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hoursValue = Math.floor(
+          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        );
+        const minutesValue = Math.floor(
+          (difference % (1000 * 60 * 60)) / (1000 * 60),
+        );
+        const secondsValue = Math.floor((difference % (1000 * 60)) / 1000);
 
-        setDays(days.toString().padStart(2, "0"));
-        setHours(hours.toString().padStart(2, "0"));
-        setMinutes(minutes.toString().padStart(2, "0"));
-        setSeconds(seconds.toString().padStart(2, "0"));
+        updateTime("days", daysValue.toString().padStart(2, "0"));
+        updateTime("hours", hoursValue.toString().padStart(2, "0"));
+        updateTime("minutes", minutesValue.toString().padStart(2, "0"));
+        updateTime("seconds", secondsValue.toString().padStart(2, "0"));
       }
     }, 1000);
 
     return () => clearInterval(interval);
   }, []);
 
+  const updateTime = (unit: string, newValue: string) => {
+    const setter = {
+      days: setDays,
+      hours: setHours,
+      minutes: setMinutes,
+      seconds: setSeconds,
+    }[unit];
+
+    if (!setter) return;
+    setter((prevValue) => {
+      if (prevValue !== newValue) {
+        triggerFlip(unit);
+        return newValue;
+      }
+      return prevValue;
+    });
+  };
+
+  const triggerFlip = (unit: string) => {
+    setFlipCard((prev) => ({ ...prev, [unit]: true }));
+    setTimeout(() => {
+      setFlipCard((prev) => ({ ...prev, [unit]: false }));
+    }, 450);
+  };
+
   return (
-    <div className="flex gap-4 md:gap-8 max-w-[688px] w-full mx-auto justify-between px-6 z-20 relative">
-      <CountdownCard timeUnit="DAYS" time={days} />
-      <CountdownCard timeUnit="HOURS" time={hours} />
-      <CountdownCard timeUnit="MINUTES" time={minutes} />
-      <CountdownCard timeUnit="SECONDS" time={seconds} />
+    <div className="relative z-20 mx-auto flex w-full max-w-[688px] justify-between gap-4 px-6 md:gap-8">
+      <CountdownCard timeUnit="DAYS" time={days} flipCard={flipCard.days} />
+      <CountdownCard timeUnit="HOURS" time={hours} flipCard={flipCard.hours} />
+      <CountdownCard
+        timeUnit="MINUTES"
+        time={minutes}
+        flipCard={flipCard.minutes}
+      />
+      <CountdownCard
+        timeUnit="SECONDS"
+        time={seconds}
+        flipCard={flipCard.seconds}
+      />
     </div>
   );
 };

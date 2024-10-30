@@ -1,4 +1,5 @@
 import CountdownCardContainer from "./components/CountdownCardContainer";
+import SocialMediaContainer from "./components/SocialMediaContainer";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <div className="absolute top-0 w-full h-[calc(100%-96px)] min-w-[1440px]">
         <img className="object-cover w-full h-full" src="/images/bg-stars.svg" alt="" />
       </div>
+      <SocialMediaContainer />
     </main>
   );
 }

@@ -11,3 +11,21 @@
     font-family: "Red Hat Text", system-ui, sans-serif;
   }
 }
+
+.flipCard {
+  animation-name: rotation;
+  animation-duration: 0.4s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  transform-style: preserve-3d;
+  transform-origin: center;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotateX(0deg) rotate3d(1, 0, 0, 0deg);
+  }
+  to {
+    transform: rotateX(180deg) rotate3d(1, 0, 0, 180deg);
+  }
+}
